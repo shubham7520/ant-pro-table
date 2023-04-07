@@ -7,11 +7,11 @@ import AntTable from '../../ant/AntTable';
 const Header = () => {
     const [task, setTask] = useState([
         {
-            startDate: new Date().toLocaleDateString(),
-            dueDate: "2023-04-10 ",
+            startDate: "2023-04-02",
+            dueDate: "2023-04-10",
             tag: "Home",
             title: "Vegetable",
-            description: " cmweinciweklcw",
+            description: "cmweinciweklcw",
             status: "Open",
             Key: 0
         }

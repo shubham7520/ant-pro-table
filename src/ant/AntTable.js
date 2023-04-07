@@ -15,6 +15,8 @@ const AntTable = ({ data, setData }) => {
     tomorrow.setDate(tomorrow.getDate() + 1);
     const start = tomorrow.toISOString().split("T")[0];
 
+    let checkOverDue;
+
     const columns = [
         {
             key: 0,
@@ -50,16 +52,16 @@ const AntTable = ({ data, setData }) => {
             dataIndex: "description",
             sorter: (record1, record2) => {
 
-                return record1.description.length < record2.description.length;
+                return record1.description.length > record2.description.length;
             }
         },
         {
             key: 2,
             title: "Start",
             dataIndex: "startDate",
-            // sorter: (record1, record2) => {
-            //     return record1.start[0] > record2.start[0];
-            // },
+            sorter: (record1, record2) => {
+                return new Date(record1.startDate) < new Date(record2.startDate);
+            },
             render: start => {
                 return <Tag>{start}</Tag>
             }
@@ -68,10 +70,11 @@ const AntTable = ({ data, setData }) => {
             key: 3,
             title: "Due Date",
             dataIndex: "dueDate",
-            // sorter: (record1, record2) => {
-            //     return record1.due[0] > record2.due[0];
-            // },
+            sorter: (record1, record2) => {
+                return new Date(record1.dueDate) < new Date(record2.dueDate);
+            },
             render: due => {
+                checkOverDue = new Date(due);
                 return <Tag>{due}</Tag>
             }
         },
@@ -81,6 +84,9 @@ const AntTable = ({ data, setData }) => {
             key: 4,
 
             render: (record) => {
+                if (checkOverDue < new Date()) {
+                    return <p style={{ color: "red" }}>OverDue</p>
+                }
                 return <div>{record === "Working" ? <p style={{ color: "RGB(254, 158, 5)", }}>{record}</p>
                     : record === "Open" ? <p style={{ color: "RGB(81, 189, 246)" }}>{record}</p>
                         : record === "Done" ? <p style={{ color: "RGB(30, 200, 109)" }}>{record}</p>
@@ -107,7 +113,6 @@ const AntTable = ({ data, setData }) => {
                     </>
                 )
             }
-
         }
     ];
 

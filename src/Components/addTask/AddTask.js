@@ -12,7 +12,7 @@ const AddTask = ({ setFormOpen, setTask }) => {
 
     const start = (new Date().toISOString().split("T")[0]);
 
-    const todayDate = new Date().toLocaleDateString();
+    const todayDate = new Date().toISOString().split("T")[0];
 
     const [addTask, setAddTask] = useState({
         startDate: todayDate,
